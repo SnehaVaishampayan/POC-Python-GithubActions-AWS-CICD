@@ -1,0 +1,29 @@
+name: Infrastructure deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-west-1
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: AKIA4BK26LWH5YPUBS5S
+        aws-secret-access-key: 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
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+    - name: Deploy CloudFormation
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: gsp-dev-core-stack
+        template: cft.yaml
+        no-fail-on-empty-changeset: "1"
