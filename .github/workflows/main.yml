@@ -25,5 +25,5 @@ jobs:
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
         name: gsp-dev-core-stack
-        template: cft.yaml
+        template: my-cft.yaml
         no-fail-on-empty-changeset: "1"
