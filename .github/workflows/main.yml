@@ -25,38 +25,8 @@ jobs:
           aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
           aws-region: us-west-1
 
-      - name: Configure environment name
-        id: env-name
-        if: GITHUB_REF##*/ != 'main'
+      - name: Git details
+        id: git-details
         run: |
-          echo "::set-output name=environment:: ${GITHUB_REF##*/}"
-          echo "is main"
-
-      - name: Configure environment NOT main
-        id: env-name-test
-        if: GITHUB_REF##*/ != 'main'
-        run: |
-          echo "::set-output name=environment:: ${GITHUB_REF##*/}"
-
-      - name: Configure environment main
-        if: GITHUB_REF##*/ == 'main'
-        run: |
-          echo "is main"    
-
-      - name: Deploy CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        if: steps.env-name.outputs.environment == 'main'
-        with:
-          name: ${{ steps.env-name.outputs.environment }}-core
-          template: my-cft.yaml
-          parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
-          no-fail-on-empty-changeset: "1"
-
-      - name: Deploy CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        if: steps.env-name.outputs.environment != 'main'
-        with:
-          name: ${{ steps.env-name.outputs.environment }}-core
-          template: my-cft.yaml
-          parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
-          no-fail-on-empty-changeset: "1"
+          echo "::set-output name=gitdetails:: github.event" 
+          echo gitdetails
