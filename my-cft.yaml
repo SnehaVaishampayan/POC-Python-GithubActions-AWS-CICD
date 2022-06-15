@@ -14,7 +14,7 @@ Resources:
         S3Bucket: my-gsp-cicd-test
         S3Key: gsp-sneha-lambda-zip.zip
       Description: Testing deployment
-      FunctionName: mylambdaFunctionName
+      FunctionName: mylambdaFunctionName-!Ref env
       Handler: CreateProject.lambda_handler
       MemorySize: 128
       Role: arn:aws:iam::827508809103:role/LambdaServiceRole
