@@ -34,15 +34,28 @@ jobs:
 
       - name: Get Environment name
         id: env-name
+        if: steps.branch-name.outputs.br_name == main
         run: |
-          if ${{ steps.branch-name.outputs.br_name }} == main; then
-            echo "::set-output name=environment:: '-'" 
-          else
-            echo "::set-output name=environment:: ${GITHUB_REF##*/}" 
-          fi
-          echo "environment=${environment}"
+            echo "::set-output name=environment:: '--'" 
           
       - name: print details   
         run: |
           echo "branch is ${{ steps.branch-name.outputs.br_name }}"                   
-          echo "environment is ${{ steps.env-name.outputs.environment }}"           
+          echo "environment is ${{ steps.env-name.outputs.environment }}"    
+          
+      - name: Deploy CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ${{ steps.env-name.outputs.environment }}-core
+          template: my-cft.yaml
+          parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
+          no-fail-on-empty-changeset: "1"          
+          
+      - name: Deploy CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1        
+        with:
+          if: ${{ steps.branch-name.outputs.br_name }} == main; 
+          name: core
+          template: my-cft.yaml
+          parameter-overrides: "env=main"
+          no-fail-on-empty-changeset: "1"            
