@@ -39,6 +39,8 @@ jobs:
             echo "::set-output name=environment:: '-'" 
           else
             echo "::set-output name=environment:: ${GITHUB_REF##*/}" 
+          fi
+          echo "environment=${environment}"
           
       - name: print details   
         run: |
