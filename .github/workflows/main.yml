@@ -24,7 +24,7 @@ jobs:
         id: env-name
         run: |
 
-            if ${{ steps.branch-name.outputs.br_name }} == main; then
+            if  ${{ steps.extract_branch.outputs.branch == 'main' }} 
               echo "::set-output name=environment:: '-'" 
             else
               echo "::set-output name=environment:: ${steps.extract_branch.outputs.branch}" 
