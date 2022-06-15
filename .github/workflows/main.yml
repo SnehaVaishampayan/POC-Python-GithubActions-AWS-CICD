@@ -37,6 +37,12 @@ jobs:
         if: ${{ steps.branch-name.outputs.br_name }} == 'main'
         run: |
             echo "::set-output name=environment:: '--'"
+
+      - name: Get Environment name
+        id: env-name
+        if: ${{ steps.branch-name.outputs.br_name }} == 'main'
+        run: |
+            echo "::set-output name=environment:: '**'"
             
       - name: print details   
         run: |
