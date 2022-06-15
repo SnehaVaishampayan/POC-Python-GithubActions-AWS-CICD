@@ -11,7 +11,25 @@ jobs:
       AWS_DEFAULT_REGION: us-west-1
 
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v1
+
+
+      - name: checkout
+        uses: actions/checkout@v2
+        
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: AKIA4BK26LWH5YPUBS5S
+          aws-secret-access-key: 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
+          aws-region: us-west-2
+
+      - name: Deploy CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: my-gsp-dev-core-${ GITHUB_REF##*/ }
+          template: my-cft.yaml
+          parameter-overrides: "env= ${{ GITHUB_REF##*/ }}"
+          no-fail-on-empty-changeset: "1"
