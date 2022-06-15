@@ -26,6 +26,7 @@ jobs:
         run: |
             echo "is main ${{ steps.branch-name.outputs.br_name }} "
             echo "is main ${{ steps.branch-name.outputs.br_name == 'main' }} "
+            echo "is main ${{ GITHUB_REF##*/ == 'main' }} "            
             echo "is main ${{ 'main' == 'main' }} "
             
             
