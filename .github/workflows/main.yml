@@ -39,7 +39,7 @@ jobs:
 
       - name: Get noprodEnvironment name
         id: env-noprod
-        if: ${{ steps.branch-name.outputs.br_name }} != main
+        if: steps.branch-name.outputs.br_name != main
         run: |
             echo "is nt main"
         
