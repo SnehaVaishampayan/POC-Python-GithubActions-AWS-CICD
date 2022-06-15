@@ -1,6 +1,15 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: API Gateway and Lambda function
-
+Parameters: 
+  env:
+    Description: Environment varaible
+    Type: String
+    AllowedValues:
+      - main
+      - test
+      - staging
+    Default: staging    
+    
 Resources:
   CreateProjectFunction:
     Type: AWS::Lambda::Function
