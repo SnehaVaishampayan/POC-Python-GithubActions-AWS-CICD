@@ -31,5 +31,5 @@ jobs:
         with:
           name: my-gsp-dev-core-${ GITHUB_REF##*/ }
           template: my-cft.yaml
-          parameter-overrides: "env= ${{ GITHUB_REF##*/ }}"
+          parameter-overrides: "env= ${ GITHUB_REF##*/ }"
           no-fail-on-empty-changeset: "1"
