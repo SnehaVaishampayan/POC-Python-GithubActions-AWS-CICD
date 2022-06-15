@@ -29,7 +29,7 @@ jobs:
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: my-gsp-dev-core-${ GITHUB_REF##*/ }
+          name: my-gsp-dev-core-${ {GITHUB_REF##*/ }}
           template: my-cft.yaml
           parameter-overrides: "env= ${ GITHUB_REF##*/ }"
           no-fail-on-empty-changeset: "1"
