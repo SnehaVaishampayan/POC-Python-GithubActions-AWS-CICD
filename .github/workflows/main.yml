@@ -15,12 +15,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         
-          
-      - name: Get branch name
-        id: branch-name
-        run: |
-            echo "::set-output name=br_name:: ${GITHUB_REF##*/}"       
-
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
