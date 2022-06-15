@@ -34,13 +34,13 @@ jobs:
 
       - name: Get Environment name
         id: env-name
-        if: ${{ steps.env-name.outputs.environment }} == main
+        if: ${{ steps.branch-name.outputs.br_name }} == main
         run: |
-            echo "is main ${{ steps.env-name.outputs.environment }} != main "
+            echo "is main ${{ steps.branch-name.outputs.br_name }} != main "
 
       - name: Get noprodEnvironment name
         id: env-noprod
-        if: ${{ steps.env-name.outputs.environment }} != main
+        if: ${{ steps.branch-name.outputs.br_name }} != main
         run: |
             echo "is nt main"
         
