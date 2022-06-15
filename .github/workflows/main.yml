@@ -27,8 +27,8 @@ jobs:
           aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
           aws-region: us-west-1
 
-      - name: Git details
-        id: git-details
+      - name: Get Environment name
+        id: env-name
         env:
           IS_PROD: ${GITHUB_REF##*/} == 'main'       
         run: |
@@ -38,3 +38,7 @@ jobs:
             echo "::set-output name=environment:: ${GITHUB_REF##*/}" 
           fi
           echo "environment" 
+          
+      - name: print details   
+        run: |
+          echo "environment is ${{ steps.env-name.outputs.environment }}"           
