@@ -27,7 +27,7 @@ jobs:
             if  ${{ steps.extract_branch.outputs.branch == 'main' }}; then
               echo "::set-output name=environment:: '-'" 
             else
-              echo "::set-output name=environment:: ${steps.extract_branch.outputs.branch}" 
+              echo "::set-output name=environment:: ${GITHUB_REF##*/}" 
             fi
               echo "finish"
       - name: print details   
