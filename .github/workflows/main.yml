@@ -31,14 +31,15 @@ jobs:
         env:
           REPO: ${{ github.repository }}
         run: |
-          ENVIRONMENT=`echo $REPO | tr "/" "-"`
           echo "Environment name: ${GITHUB_REF##*/}"
-          echo "::set-output name=environment::${GITHUB_REF##*/}"
-        
+
+          echo "Environment name: ${{ if eq(${GITHUB_REF##*/} , 'main') }}: 'itsmain'"
+          echo "::set-output name=environment:: ${GITHUB_REF##*/}"
+
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: ${{ steps.env-name.outputs.environment }}-core
           template: my-cft.yaml
-          parameter-overrides: "env=main"
+          parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
           no-fail-on-empty-changeset: "1"
