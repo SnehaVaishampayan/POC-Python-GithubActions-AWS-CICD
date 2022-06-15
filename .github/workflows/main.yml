@@ -5,13 +5,24 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       AWS_DEFAULT_REGION: us-west-1
 
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v1
-      - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+
+
+      - name: checkout
+        uses: actions/checkout@v2
+        
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Get Environment name
+        id: env-name
+        run: |
+            echo "is main ${{ steps.extract_branch.outputs.branch }} "
+            echo "is main ${{ steps.extract_branch.outputs.branch == 'main' }} "
+            echo "is main ${{ 'main' == 'main' }} "
