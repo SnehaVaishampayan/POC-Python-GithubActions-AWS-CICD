@@ -38,7 +38,7 @@ jobs:
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: ${{ steps.env-name.outputs.environment }}-core
+          name: dev-core
           template: my-cft.yaml
           parameter-overrides: "env=main"
           no-fail-on-empty-changeset: "1"
