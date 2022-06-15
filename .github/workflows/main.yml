@@ -23,6 +23,16 @@ jobs:
       - name: Get Environment name
         id: env-name
         run: |
-            echo "is main ${{ steps.extract_branch.outputs.branch }} "
-            echo "is main ${{ steps.extract_branch.outputs.branch == 'main' }} "
-            echo "is main ${{ 'main' == 'main' }} "
+
+            if  ${{ steps.extract_branch.outputs.branch == 'main' }}; then
+              echo "::set-output name=environment:: '-'" 
+            else
+              echo "::set-output name=environment:: ${steps.extract_branch.outputs.branch}" 
+            fi
+              echo "finish"
+      - name: print details   
+        run: |
+            echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
+            echo "print condition ${{ steps.extract_branch.outputs.branch == 'main' }} "
+            echo "print environment is ${{ steps.env-name.outputs.environment }}"              
+        
