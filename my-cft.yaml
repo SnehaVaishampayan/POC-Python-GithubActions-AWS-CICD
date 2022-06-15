@@ -4,10 +4,6 @@ Parameters:
   env:
     Description: Environment varaible
     Type: String
-    AllowedValues:
-      - main
-      - test
-      - staging
     Default: staging    
     
 Resources:
