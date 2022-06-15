@@ -26,19 +26,21 @@ jobs:
           aws-access-key-id: AKIA4BK26LWH5YPUBS5S
           aws-secret-access-key: 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
           aws-region: us-west-1
+          
+      - name: Get branch name
+        id: branch-name
+        run: |
+            echo "::set-output name=br_name:: ${GITHUB_REF##*/}"           
 
       - name: Get Environment name
         id: env-name
-        env:
-          IS_PROD: ${GITHUB_REF##*/} == 'main'       
         run: |
-          if ${GITHUB_REF##*/} == "main"; then
+          if ${{ steps.branch-name.outputs.br_name }} == "main"; then
             echo "::set-output name=environment:: '-'" 
           else
             echo "::set-output name=environment:: ${GITHUB_REF##*/}" 
-          fi
-          echo "environment" 
           
       - name: print details   
         run: |
+          echo "branch is ${{ steps.branch-name.outputs.br_name }}"                   
           echo "environment is ${{ steps.env-name.outputs.environment }}"           
