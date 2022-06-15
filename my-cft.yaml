@@ -11,11 +11,12 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Code:
-        S3Bucket: my-gsp-cicd-test
-        S3Key: gsp-sneha-lambda-zip.zip
+        ZipFile: >
+          def handler(event, context):
+            print('hello from lambda')
       Description: Testing deployment
       FunctionName: mylambdaFunctionName-!Ref env
-      Handler: CreateProject.lambda_handler
+      Handler: index.handler
       MemorySize: 128
       Role: arn:aws:iam::827508809103:role/LambdaServiceRole
       Runtime: python3.6
