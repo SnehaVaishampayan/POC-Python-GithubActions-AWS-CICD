@@ -26,10 +26,19 @@ jobs:
           aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
           aws-region: us-west-2
 
+      - name: Configure environment name
+        id: env-name
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          ENVIRONMENT=`echo $REPO | tr "/" "-"`
+          echo "Environment name: $ENVIRONMENT"
+          echo "::set-output name=environment::$ENVIRONMENT"
+        
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: my-gsp-dev-core-${ {GITHUB_REF##*/ }}
+          name: ${{ steps.env-name.outputs.environment }}-core
           template: my-cft.yaml
-          parameter-overrides: "env= ${ GITHUB_REF##*/ }"
+          parameter-overrides: "env= ${{ steps.env-name.outputs.environment }}"
           no-fail-on-empty-changeset: "1"
