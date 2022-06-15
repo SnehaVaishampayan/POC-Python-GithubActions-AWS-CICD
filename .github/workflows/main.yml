@@ -32,8 +32,8 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           echo "Environment name: ${GITHUB_REF##*/}"
-
-          echo "Environment name: ${{ if eq(${GITHUB_REF##*/} , 'main') }}: 'itsmain'"
+          if: ${GITHUB_REF##*/} == 'main'          
+          echo "itsm "
           echo "::set-output name=environment:: ${GITHUB_REF##*/}"
 
       - name: Deploy CloudFormation
