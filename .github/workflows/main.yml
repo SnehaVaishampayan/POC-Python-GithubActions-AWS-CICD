@@ -20,13 +20,17 @@ jobs:
         id: branch-name
         run: |
             echo "::set-output name=br_name:: ${GITHUB_REF##*/}"       
-            
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Get Environment name
         id: env-name
         run: |
-            echo "is main ${{ steps.branch-name.outputs.br_name }} "
-            echo "is main ${{ steps.branch-name.outputs.br_name == 'main' }} "
-            echo "is main ${{ GITHUB_REF##*/ == 'main' }} "            
+            echo "is main ${{ steps.extract_branch.outputs.branch }} "
+            echo "is main ${{ steps.extract_branch.outputs.branch == 'main' }} "
             echo "is main ${{ 'main' == 'main' }} "
             
             
