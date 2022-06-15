@@ -24,7 +24,7 @@ jobs:
         with:
           aws-access-key-id: AKIA4BK26LWH5YPUBS5S
           aws-secret-access-key: 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
-          aws-region: us-west-2
+          aws-region: us-west-1
 
       - name: Configure environment name
         id: env-name
@@ -32,13 +32,13 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           ENVIRONMENT=`echo $REPO | tr "/" "-"`
-          echo "Environment name: $ENVIRONMENT"
-          echo "::set-output name=environment::$ENVIRONMENT"
+          echo "Environment name: ${GITHUB_REF##*/}"
+          echo "::set-output name=environment::${GITHUB_REF##*/}"
         
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: dev-core
+          name: ${{ steps.env-name.outputs.environment }}-core
           template: my-cft.yaml
           parameter-overrides: "env=main"
           no-fail-on-empty-changeset: "1"
