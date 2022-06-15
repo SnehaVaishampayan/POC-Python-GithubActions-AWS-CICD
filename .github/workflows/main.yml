@@ -40,5 +40,5 @@ jobs:
         with:
           name: ${{ steps.env-name.outputs.environment }}-core
           template: my-cft.yaml
-          parameter-overrides: "env= ${{ steps.env-name.outputs.environment }}"
+          parameter-overrides: "ParameterKey=env, ParameterValue=main"
           no-fail-on-empty-changeset: "1"
