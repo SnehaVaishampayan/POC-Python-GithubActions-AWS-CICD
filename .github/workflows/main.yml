@@ -42,12 +42,4 @@ jobs:
         run: |
           echo "branch is ${{ steps.branch-name.outputs.br_name }}"                   
           echo "environment is ${{ steps.env-name.outputs.environment }}"    
-          
-      - name: Deploy CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: core-${{ steps.env-name.outputs.environment }}
-          template: my-cft.yaml
-          parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
-          no-fail-on-empty-changeset: "1"          
-              
+
