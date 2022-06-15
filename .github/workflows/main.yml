@@ -24,7 +24,7 @@ jobs:
       - name: Get Environment name
         id: env-name
         run: |
-            echo "is main ${{ steps.branch-name.outputs.br_name == main }} "
+            echo "is main ${{ steps.branch-name.outputs.br_name == "main" }} "
             
             
         
