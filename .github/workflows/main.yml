@@ -30,7 +30,7 @@ jobs:
       - name: Git details
         id: git-details
         env:
-          IS_PROD: ${{ GITHUB_REF == 'main' }}        
+          IS_PROD: ${GITHUB_REF##*/} == 'main'       
         run: |
           if ${IS_PROD}; then
             echo "::set-output name=environment:: ''" 
