@@ -36,7 +36,7 @@ jobs:
         id: env-name
         if: ${{ steps.branch-name.outputs.br_name }} == main
         run: |
-            echo "::set-output name=environment:: '--'" 
+            echo "::set-output name=environment:: ''" 
           
       - name: print details   
         run: |
@@ -46,16 +46,8 @@ jobs:
       - name: Deploy CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: ${{ steps.env-name.outputs.environment }}-core
+          name: core-${{ steps.env-name.outputs.environment }}
           template: my-cft.yaml
           parameter-overrides: "env=${{ steps.env-name.outputs.environment }}"
           no-fail-on-empty-changeset: "1"          
-          
-      - name: Deploy CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1        
-        with:
-          if: ${{ steps.branch-name.outputs.br_name }} == main
-          name: core
-          template: my-cft.yaml
-          parameter-overrides: "env=main"
-          no-fail-on-empty-changeset: "1"            
+              
