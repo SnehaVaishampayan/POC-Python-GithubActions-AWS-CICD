@@ -35,15 +35,6 @@ jobs:
         aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
         
-    - name: zip Lambda Function
-      run: |
-        zip -r9 CreateProject.zip CreateProject.py
-
-    - name: AWS Deploy
-      run: |
-        aws s3 --region us-west-1 cp CreateProject.zip s3://gsp-cicd-test/
-        echo aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
-        
     - name: print details   
       run: |
           echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
