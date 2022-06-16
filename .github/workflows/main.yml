@@ -38,8 +38,12 @@ jobs:
     - name: print details  
       id: step1
       run: |
-          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
-          
+          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}} == 0
+
+    - name: func exists
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}})"
+      id: ex
           
     - name: print44details   
       run: |
