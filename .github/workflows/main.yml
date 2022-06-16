@@ -10,9 +10,16 @@ jobs:
       AWS_DEFAULT_REGION: us-west-1
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-
+    - uses: actions/checkout@v2.1.0
+    - run: |
+        output=$(python a.py)
+        output="${output//'%'/'%25'}"
+        echo "::set-output name=changelog::$output"
+      id: step1
+      
+    - name: Print changelog
+      run: echo "${{ steps.step1.outputs.changelog }}"
+      
     - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -44,7 +51,7 @@ jobs:
       run: |
           echo "print branch ${{ steps.ex.outputs.bh }} "
             
-    
+  
         
           
 
