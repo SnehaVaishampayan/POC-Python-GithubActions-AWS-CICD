@@ -35,12 +35,17 @@ jobs:
         aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
         
-    - name: print details   
+    - name: print details  
+      id: step1
       run: |
           echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
           echo "print condition ${{ steps.extract_branch.outputs.branch == 'main' }} "
           echo "print environment is ${{ steps.env-name.outputs.environment }}"    
-          echo "${{aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE}}"
+          echo "::set-output name=test::aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE"
+          
+    - name: print44details   
+      run: |
+          echo "print branch ${{ steps.step1.outputs.test }} "          
         
           
 
