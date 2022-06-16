@@ -42,7 +42,7 @@ jobs:
       
     - name: fe2
       shell: bash
-      run: echo "##[set-output name=branch;]$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
+      run: echo "##[set-output name=bh;]$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
     
         
           
