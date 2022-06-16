@@ -10,31 +10,46 @@ jobs:
       AWS_DEFAULT_REGION: us-west-1
 
     steps:
+    - name: checkout
+      uses: actions/checkout@v2
 
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
 
-      - name: checkout
-        uses: actions/checkout@v2
+    - name: Get lambda function name
+      id: lambda-function-name
+      run: |
+          if  ${{ steps.extract_branch.outputs.branch == 'main' }}; then
+            echo "::set-output name=function-name:: 'gsp-create-project'"
+          else
+            echo "::set-output name=function-name:: gsp-create-project-${{steps.extract_branch.outputs.branch}}"
+          fi
+            echo "finish"
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: AKIA4BK26LWH5YPUBS5S
+        aws-secret-access-key: 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
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}
         
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+    - name: zip Lambda Function
+      run: |
+        zip -r9 CreateProject.zip CreateProject.py
 
-      - name: Get Environment name
-        id: env-name
-        run: |
-
-            if  ${{ steps.extract_branch.outputs.branch == 'main' }}; then
-              echo "::set-output name=environment:: '-'" 
-            else
-              echo "::set-output name=environment:: ${steps.extract_branch.outputs.branch}" 
-            fi
-              echo "finish"
-      - name: print details   
-        run: |
-            echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
-            echo "print condition ${{ steps.extract_branch.outputs.branch == 'main' }} "
-            echo "print environment is ${{ steps.env-name.outputs.environment }}"              
+    - name: AWS Deploy
+      run: |
+        aws s3 --region us-west-1 cp CreateProject.zip s3://gsp-cicd-test/
+        echo aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
+        
+    - name: print details   
+      run: |
+          echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
+          echo "print condition ${{ steps.extract_branch.outputs.branch == 'main' }} "
+          echo "print environment is ${{ steps.env-name.outputs.environment }}"    
+          echo ${aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE}
         
           
 
