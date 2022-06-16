@@ -38,7 +38,8 @@ jobs:
     - name: print details  
       id: step1
       run: |
-          aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE
+          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
+          echo ${{aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}} == 0}}
           
           
     - name: print44details   
