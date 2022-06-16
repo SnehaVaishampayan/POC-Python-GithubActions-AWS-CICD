@@ -40,8 +40,9 @@ jobs:
       run: |
           echo "print branch ${{ steps.extract_branch.outputs.branch }} "            
           echo "print condition ${{ steps.extract_branch.outputs.branch == 'main' }} "
-          echo "print environment is ${{ steps.env-name.outputs.environment }}"    
-          echo "::set-output name=test::aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE"
+          echo "print environment is ${{ steps.env-name.outputs.environment }}"            
+          echo "##[set-output name=test;]$(echo ${aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE})"
+          
           
     - name: print44details   
       run: |
