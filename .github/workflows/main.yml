@@ -48,7 +48,7 @@ jobs:
     - name: Now Check if AWS Lambda Function is present
       id: get-function
       run: |
-          aws lambda get-function --function-name  ${{steps.lambda-function-name.outputs.function-name}} 1>/dev/null 2>&1
+          aws lambda function-exists --function-name  ${{steps.lambda-function-name.outputs.function-name}}
           echo "::set-output name=error-code::$?"
 
     - name: Now If present, update lambda
