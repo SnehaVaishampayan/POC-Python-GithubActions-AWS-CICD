@@ -49,16 +49,8 @@ jobs:
       shell: bash
       id: get-function
       run: |
-          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
-          echo $?
-          if [ $? -eq 0 ]
-          then
-            echo "Success:."
-            exit 0
-          else
-            echo "Failure: Script failed" >&2
-            exit 1
-          fi
+          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}} echo "::set-output name=error-code::$?" || echo "::set-output name=error-code::1"
+
 
     - name: Now If present, update lambda
       shell: bash
