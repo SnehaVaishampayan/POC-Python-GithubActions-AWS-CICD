@@ -42,17 +42,14 @@ jobs:
         aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-    - name: print details
+    - name: func-present details
       shell: bash
+      id: func-present
       run: |
-          echo "::set-output name=bh::$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
-          echo "hj ${{bh}}"
-    - name: fe2
-      id: ex    
-      shell: bash
-      run: |
-        echo "::set-output name=bh::$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
-
-        
-          
+          output=$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})
+          output="${output//'%'/'%25'}"
+          echo "::set-output name=cl::$output"          
+      
+    - name: Print func-present
+      run: echo "${{ steps.func-present.outputs.cl }}"
 
