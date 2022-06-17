@@ -45,7 +45,8 @@ jobs:
     - name: fe2
       id: ex    
       shell: bash
-      run: echo "##[set-output name=bh;]$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
+      run: |
+        echo "::set-output name=bh::$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
     
     - name: print details
       run: |
