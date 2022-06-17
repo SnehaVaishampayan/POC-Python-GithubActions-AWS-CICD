@@ -45,7 +45,8 @@ jobs:
     - name: print details
       shell: bash
       run: |
-          if ${{aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}}} ; then
+          echo "::set-output name=bh::$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
+          if ${{bh}}}} ; then
             echo "Game over!"
             exit 1
           else
