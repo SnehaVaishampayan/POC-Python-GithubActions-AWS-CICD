@@ -32,9 +32,9 @@ jobs:
       id: lambda-function-name
       run: |
           if  ${{ steps.extract_branch.outputs.branch == 'main' }}; then
-            echo "::set-output name=function-name:: 'gsp-create-project'"
+            echo "::set-output name=function-name::gsp-create-project"
           else
-            echo "::set-output name=function-name:: gsp-create-project-${{steps.extract_branch.outputs.branch}}"
+            echo "::set-output name=function-name::gsp-create-project-${{steps.extract_branch.outputs.branch}}"
           fi
             echo "finish"
 
