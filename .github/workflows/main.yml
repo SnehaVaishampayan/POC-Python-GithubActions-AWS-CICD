@@ -1,8 +1,11 @@
 name: Infrastructure deployment
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main  ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,7 +48,7 @@ jobs:
     - name: Now Check if AWS Lambda Function is present
       id: get-function
       run: |
-          aws lambda get-function --function-name  ${{steps.lambda-function-name.outputs.function-name}}
+          aws lambda get-function --function-name  ${{steps.lambda-function-name.outputs.function-name}}2>&1
           echo "::set-output name=error-code::$?"
 
     - name: Now If present, update lambda
