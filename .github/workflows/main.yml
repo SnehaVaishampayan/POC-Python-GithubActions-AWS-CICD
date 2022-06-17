@@ -60,6 +60,8 @@ jobs:
     - name: Now If present, update lambda
       shell: bash
       run: |
+        echo "final ${{ steps.get-function.outputs.error-code}}"      
+        echo "final ${{ steps.get-function.outputs.error-code == '0'}}"
         if  ${{ steps.get-function.outputs.error-code == '0'}} ; then
           echo "Lambda is present"
         else
