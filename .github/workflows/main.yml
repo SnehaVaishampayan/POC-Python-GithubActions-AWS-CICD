@@ -42,15 +42,17 @@ jobs:
         aws-secret-access-key: T9o0dE9YT1geKz0WjYvJg364ymfRkZ/EBuOkbceD
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-    - name: func-present details
-      shell: bash
-      id: func-present
-      run: |     
-          if $(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}) ; then
-            echo "Command succeeded"
-          else
-              echo "Command failed"
-          fi
-    - name: Print func-present
-      run: echo "${{ steps.func-present.outputs.cl }}"
+    - name: Now Check if AWS Lambda Function is present
+      id: get-function
+      run: |
+          aws lambda get-function --function-name  ${{steps.lambda-function-name.outputs.function-name}}
+          echo "::set-output name=error-code::$?"
 
+    - name: Now If present, update lambda
+      run: |
+        if  ${{ steps.get-function.outputs.error-code == '0'}} ; then
+          echo "Lambda is present"
+        else
+          echo "Please create lambda function."
+        fi
+          echo "finish"
