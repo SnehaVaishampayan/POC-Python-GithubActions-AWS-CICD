@@ -45,11 +45,12 @@ jobs:
     - name: func-present details
       shell: bash
       id: func-present
-      run: |
-          output=$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})
-          output="${output//'%'/'%25'}"
-          echo "::set-output name=cl::$output"          
-      
+      run: |     
+          if $(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}) ; then
+            echo "Command succeeded"
+          else
+              echo "Command failed"
+          fi
     - name: Print func-present
       run: echo "${{ steps.func-present.outputs.cl }}"
 
