@@ -46,6 +46,7 @@ jobs:
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
     - name: Now Check if AWS Lambda Function is present
+      shell: bash
       id: get-function
       run: |
           cmd="aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}"
@@ -55,6 +56,7 @@ jobs:
           [ $status -eq 0 ] && echo " command was successful" || echo " failed"
 
     - name: Now If present, update lambda
+      shell: bash
       run: |
         if  ${{ steps.get-function.outputs.error-code == '0'}} ; then
           echo "Lambda is present"
