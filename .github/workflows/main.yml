@@ -49,7 +49,7 @@ jobs:
       shell: bash
       id: get-function
       run: |
-          cmd="aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}"
+          aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
           echo $?
           if [ $? -eq 0 ]
           then
