@@ -51,7 +51,7 @@ jobs:
       run: |
           
           {
-              aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}} &&
+              aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}
               echo "::set-output name=error-code::$?"
           } || {
               echo "::set-output name=error-code::1"
