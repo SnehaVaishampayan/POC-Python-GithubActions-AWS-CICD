@@ -50,10 +50,14 @@ jobs:
       id: get-function
       run: |
           cmd="aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}}"
-          $cmd
-          ## get status ##
-          status=$?
-          [ $status -eq 0 ] && echo " command was successful" || echo " failed"
+          if [ $? -eq 0 ]
+          then
+            echo "Success:."
+            exit 0
+          else
+            echo "Failure: Script failed" >&2
+            exit 1
+          fi
 
     - name: Now If present, update lambda
       shell: bash
