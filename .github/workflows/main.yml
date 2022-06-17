@@ -46,13 +46,7 @@ jobs:
       shell: bash
       run: |
           echo "::set-output name=bh::$(aws lambda get-function --function-name ${{steps.lambda-function-name.outputs.function-name}})"
-          if ${{bh}} ; then
-            echo "Game over!"
-            exit 1
-          else
-            echo "list"
-          fi
-            
+          echo "hj ${{bh}}"
     - name: fe2
       id: ex    
       shell: bash
